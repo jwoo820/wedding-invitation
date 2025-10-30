@@ -122,3 +122,55 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* First-scroll animations */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.first-scroll-animate [data-anim="fade-up"] {
+  animation: fadeUp 700ms ease-out both;
+}
+.first-scroll-animate [data-anim="fade-in"] {
+  animation: fadeIn 700ms ease-out both;
+}
+/* stagger */
+.first-scroll-animate [data-anim][data-delay="100"] { animation-delay: 100ms; }
+.first-scroll-animate [data-anim][data-delay="200"] { animation-delay: 200ms; }
+.first-scroll-animate [data-anim][data-delay="300"] { animation-delay: 300ms; }
+.first-scroll-animate [data-anim][data-delay="400"] { animation-delay: 400ms; }
+.first-scroll-animate [data-anim][data-delay="500"] { animation-delay: 500ms; }
+
+/* Scroll-start gradient overlay */
+.scroll-fade-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0.75) 20%, rgba(255,255,255,0) 40%);
+  transition: opacity 200ms ease;
+  opacity: var(--overlay-opacity, 1);
+  z-index: 60;
+}
+.dark .scroll-fade-overlay {
+  background: linear-gradient(to bottom, rgba(20,20,20,1), rgba(20,20,20,0.75) 20%, rgba(20,20,20,0) 40%);
+}
+
+/* Reveal on view */
+@keyframes revealUp {
+  0% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.is-visible[data-reveal] {
+  animation: revealUp 700ms ease-out both;
+}

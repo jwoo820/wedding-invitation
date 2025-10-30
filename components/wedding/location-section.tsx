@@ -3,6 +3,7 @@
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { MapPin, Car, Train, Bus, ExternalLink } from "lucide-react"
+import NaverMap from "@/components/naver-map"
 
 export default function LocationSection() {
   const venueName = "더 컨벤션"
@@ -11,24 +12,23 @@ export default function LocationSection() {
   const longitude = 127.0276
 
   const openNaverMap = () => {
-    // 모바일에서는 네이버 지도 앱으로, 데스크톱에서는 웹으로 열기
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 
     if (isMobile) {
-      // 네이버 지도 앱 딥링크 (앱이 없으면 자동으로 웹으로 fallback)
+      // 네이버 지도 앱 딥링크 (앱이 없으면 웹으로 fallback)
       const naverMapApp = `nmap://place?lat=${latitude}&lng=${longitude}&name=${encodeURIComponent(venueName)}&appname=com.wedding.invitation`
       const naverMapWeb = `https://map.naver.com/v5/search/${encodeURIComponent(venueAddress)}`
 
       // 앱 열기 시도
       window.location.href = naverMapApp
 
-      // 2초 후에도 페이지에 있으면 웹으로 이동
+      // 1.5초 후에도 페이지에 있으면 웹으로 새 탭 열기 (보안 옵션 포함)
       setTimeout(() => {
-        window.open(naverMapWeb, "_blank")
-      }, 2000)
+        window.open(naverMapWeb, "_blank", "noopener,noreferrer")
+      }, 1500)
     } else {
-      // 데스크톱에서는 바로 웹으로
-      window.open(`https://map.naver.com/v5/search/${encodeURIComponent(venueAddress)}`, "_blank")
+      // 데스크톱에서는 바로 웹으로 (보안 옵션 포함)
+      window.open(`https://map.naver.com/v5/search/${encodeURIComponent(venueAddress)}`, "_blank", "noopener,noreferrer")
     }
   }
 
@@ -38,14 +38,12 @@ export default function LocationSection() {
         <h2 className="text-3xl font-bold text-center mb-8 text-foreground">오시는 길</h2>
 
         <div className="mb-8 rounded-lg overflow-hidden bg-muted">
-          <img
-            src={`https://naveropenapi.apigw.ntruss.com/map-static/v2/raster?w=600&h=400&center=${longitude},${latitude}&level=16&markers=type:d|size:mid|pos:${longitude}%20${latitude}&X-NCP-APIGW-API-KEY-ID=YOUR_CLIENT_ID`}
-            alt="웨딩홀 위치"
-            className="w-full h-64 object-cover"
-            onError={(e) => {
-              // API 키가 없을 경우 fallback 이미지
-              e.currentTarget.src = `https://via.placeholder.com/600x400/f0f0f0/666666?text=${encodeURIComponent("지도 영역\n" + venueName)}`
-            }}
+          <NaverMap
+            latitude={latitude}
+            longitude={longitude}
+            markerLabel={`${venueName}`}
+            className="w-full h-64"
+            zoom={16}
           />
         </div>
 

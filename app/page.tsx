@@ -9,10 +9,12 @@ import LocationSection from "@/components/wedding/location-section"
 import GuestbookSection from "@/components/wedding/guestbook-section"
 import AccountSection from "@/components/wedding/account-section"
 import ContactSection from "@/components/wedding/contact-section"
+import { useRevealOnView } from "@/hooks/use-reveal-on-view"
 
 export default function WeddingInvitation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("main")
+  const { containerRef } = useRevealOnView()
 
   const menuItems = [
     { id: "main", label: "메인", icon: Heart },
@@ -31,18 +33,31 @@ export default function WeddingInvitation() {
   }
 
   const handleShare = async () => {
+    const shareTitle = "김민수 ❤️ 이지은 결혼식에 초대합니다"
+    const shareText = [
+      "저희 두 사람의 소중한 날에 함께해 주세요",
+      "일시: 2025년 5월 24일 (토) 오후 2시",
+      "장소: 서울 강남구 더 컨벤션 3층 그랜드볼룸",
+    ].join("\n")
+
     if (navigator.share) {
       try {
         await navigator.share({
-          title: "김민수 ❤️ 이지은 결혼식에 초대합니다",
-          text: "저희 두 사람의 소중한 날에 함께해 주세요",
+          title: shareTitle,
+          text: shareText,
           url: window.location.href,
         })
       } catch (err) {
-        console.log("Share cancelled")
+        // Share cancelled or unsupported
       }
     } else {
-      alert("이 브라우저는 공유 기능을 지원하지 않습니다.")
+      // Fallback: copy to clipboard
+      try {
+        await navigator.clipboard.writeText(`${shareTitle}\n${shareText}\n${window.location.href}`)
+        alert("공유 링크가 복사되었습니다.")
+      } catch {
+        alert("이 브라우저는 공유 기능을 지원하지 않습니다.")
+      }
     }
   }
 
@@ -56,7 +71,7 @@ export default function WeddingInvitation() {
 
     const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.start.replace(/[-:]/g, "")}/${event.end.replace(/[-:]/g, "")}&location=${encodeURIComponent(event.location)}`
 
-    window.open(googleCalendarUrl, "_blank")
+    window.open(googleCalendarUrl, "_blank", "noopener,noreferrer")
   }
 
   return (
@@ -112,29 +127,29 @@ export default function WeddingInvitation() {
       {/* Overlay */}
       {isMenuOpen && <div className="fixed inset-0 bg-black/20 z-30" onClick={() => setIsMenuOpen(false)} />}
 
-      {/* Main Content */}
-      <main className="relative">
-        <section id="main">
+      {/* Main Content with reveal-on-view */}
+      <main className="relative" ref={containerRef as any}>
+        <section id="main" data-reveal data-delay="0">
           <MainSection />
         </section>
 
-        <section id="gallery">
+        <section id="gallery" data-reveal data-delay="100">
           <GallerySection />
         </section>
 
-        <section id="location">
+        <section id="location" data-reveal data-delay="150">
           <LocationSection />
         </section>
 
-        <section id="guestbook">
+        <section id="guestbook" data-reveal data-delay="200">
           <GuestbookSection />
         </section>
 
-        <section id="account">
+        <section id="account" data-reveal data-delay="250">
           <AccountSection />
         </section>
 
-        <section id="contact">
+        <section id="contact" data-reveal data-delay="300">
           <ContactSection />
         </section>
       </main>
