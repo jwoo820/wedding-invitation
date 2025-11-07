@@ -10,7 +10,7 @@ export default function MainSection() {
       <Card className="max-w-2xl w-full p-8 md:p-12 text-center" data-anim="fade-up">
         {/* Main Image */}
         <div className="mb-8 rounded-lg overflow-hidden" data-anim="fade-in" data-delay="100">
-          <img src="/romantic-wedding-couple-portrait-in-elegant-settin.jpg" alt="Wedding Couple" className="w-full h-auto object-cover" />
+          <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/romantic-wedding-couple-portrait-in-elegant-settin.jpg`} alt="Wedding Couple" className="w-full h-auto object-cover" />
         </div>
 
         {/* Invitation Text */}
