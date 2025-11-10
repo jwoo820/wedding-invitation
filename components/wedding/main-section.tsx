@@ -4,13 +4,18 @@ import { useFirstScroll } from "@/hooks/use-first-scroll"
 
 export default function MainSection() {
   const firstScroll = useFirstScroll()
+  const mainImageFile = "romantic-wedding-couple-portrait-in-elegant-settin.jpg";
 
   return (
     <div className={`min-h-screen flex items-center justify-center p-4 ${firstScroll ? 'first-scroll-animate' : ''}`}>
       <Card className="max-w-2xl w-full p-8 md:p-12 text-center" data-anim="fade-up">
         {/* Main Image */}
         <div className="mb-8 rounded-lg overflow-hidden" data-anim="fade-in" data-delay="100">
-          <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/romantic-wedding-couple-portrait-in-elegant-settin.jpg`} alt="Wedding Couple" className="w-full h-auto object-cover" />
+          <img src={
+            process.env.NEXT_PUBLIC_CDN
+              ? `https://${process.env.NEXT_PUBLIC_CDN}/${mainImageFile}`
+              : `/sample/${mainImageFile}`
+          } alt="Wedding Couple" className="w-full h-auto object-cover" />
         </div>
 
         {/* Invitation Text */}
