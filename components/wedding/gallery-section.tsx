@@ -7,14 +7,13 @@ import { X } from "lucide-react"
 export default function GallerySection() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
 
-  const images = [
-    { id: 1, src: "/gallery-1.jpg" },
-    { id: 2, src: "/gallery-2.jpg" },
-    { id: 3, src: "/gallery-3.jpg" },
-    { id: 4, src: "/gallery-4.jpg" },
-    { id: 5, src: "/gallery-5.jpg" },
-    { id: 6, src: "/gallery-6.jpg" },
-  ]
+  const hasCdn = !!process.env.NEXT_PUBLIC_CDN;
+  const images = Array.from({ length: 6 }, (_, i) => ({
+    id: i + 1,
+    src: hasCdn
+      ? `https://${process.env.NEXT_PUBLIC_CDN}/gallery-${i + 1}.jpg`
+      : `/sample/gallery-${i + 1}.jpg`, // fallback sample image in /public/sample/
+  }))
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 py-20">
