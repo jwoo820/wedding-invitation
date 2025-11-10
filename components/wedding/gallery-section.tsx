@@ -11,7 +11,7 @@ export default function GallerySection() {
   const images = Array.from({ length: 6 }, (_, i) => ({
     id: i + 1,
     src: hasCdn
-      ? `https://${process.env.NEXT_PUBLIC_CDN}/gallery-${i + 1}.jpg`
+      ? `https://${process.env.NEXT_PUBLIC_CDN}/gallery/gallery-${i + 1}.jpg`
       : `/sample/gallery-${i + 1}.jpg`, // fallback sample image in /public/sample/
   }))
 
