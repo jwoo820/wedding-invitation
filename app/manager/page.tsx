@@ -1,27 +1,29 @@
-// app/manager/layout.tsx
-import React from 'react'
-
-export const metadata = {
-  title: 'flosmeeting manager',
-  description: '하객 / 참석 / 좌석 관리 대시보드',
-}
-
-export default function ManagerLayout({ children }: { children: React.ReactNode }) {
+// app/manager/page.tsx
+export default function ManagerDashboard() {
   return (
-    <html lang="ko">
-      <body className="bg-zinc-950 text-zinc-100 font-sans">
-        <div className="flex min-h-screen">
-          <aside className="w-56 bg-zinc-900 border-r border-zinc-800 p-4 text-sm">
-            <div className="font-semibold mb-4">관리자 콘솔</div>
-            <nav className="space-y-2">
-              <a href="/manager" className="block text-zinc-300 hover:text-white">대시보드</a>
-              <a href="/manager/guests" className="block text-zinc-300 hover:text-white">하객 관리</a>
-              <a href="/manager/settings" className="block text-zinc-300 hover:text-white">환경 설정</a>
-            </nav>
-          </aside>
-          <main className="flex-1 p-6">{children}</main>
+    <section className="space-y-4">
+      <h1 className="text-xl font-semibold text-white">대시보드</h1>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="rounded-md bg-zinc-900 border border-zinc-800 p-4">
+          <div className="text-zinc-400 text-sm">전체 하객 수</div>
+          <div className="text-2xl font-bold text-white mt-1">128명</div>
         </div>
-      </body>
-    </html>
+
+        <div className="rounded-md bg-zinc-900 border border-zinc-800 p-4">
+          <div className="text-zinc-400 text-sm">참석 확정</div>
+          <div className="text-2xl font-bold text-white mt-1">96명</div>
+        </div>
+      </div>
+
+      <div className="rounded-md bg-zinc-900 border border-zinc-800 p-4 text-sm text-zinc-300">
+        최근 RSVP 업데이트 3건
+        <ul className="mt-2 list-disc list-inside space-y-1 text-zinc-400">
+          <li>박00 님 참석 확정</li>
+          <li>최00 님 동반 1인 추가</li>
+          <li>김00 님 알레르기(견과류) 표시</li>
+        </ul>
+      </div>
+    </section>
   )
 }
