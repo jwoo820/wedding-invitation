@@ -7,6 +7,7 @@
     "dev": "next dev -H 0.0.0.0 -p 3000",
     "lint": "next lint",
     "start": "next start",
+    "hooks:install": "git config core.hooksPath .githooks",
     "dev:wedding": "NEXT_DEV_ORIGIN=http://wedding.flosmeeting.local:3000 next dev -H 0.0.0.0 -p 3000",
     "dev:manager": "NEXT_DEV_ORIGIN=http://manager.flosmeeting.local:3000 next dev -H 0.0.0.0 -p 3000",
     "dev:www": "NEXT_DEV_ORIGIN=http://www.flosmeeting.local:3000 next dev -H 0.0.0.0 -p 3000"
