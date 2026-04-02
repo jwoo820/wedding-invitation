@@ -174,3 +174,102 @@
 .is-visible[data-reveal] {
   animation: revealUp 700ms ease-out both;
 }
+
+.markdown-view {
+  line-height: 1.75;
+  font-size: 0.95rem;
+}
+
+.markdown-view h1,
+.markdown-view h2,
+.markdown-view h3,
+.markdown-view h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.markdown-view h1 {
+  font-size: 1.75rem;
+}
+
+.markdown-view h2 {
+  font-size: 1.4rem;
+}
+
+.markdown-view h3 {
+  font-size: 1.15rem;
+}
+
+.markdown-view p,
+.markdown-view ul,
+.markdown-view ol,
+.markdown-view pre,
+.markdown-view blockquote,
+.markdown-view table {
+  margin: 0.85rem 0;
+}
+
+.markdown-view ul,
+.markdown-view ol {
+  padding-left: 1.25rem;
+}
+
+.markdown-view li {
+  margin: 0.25rem 0;
+}
+
+.markdown-view blockquote {
+  border-left: 3px solid var(--border);
+  padding-left: 0.85rem;
+  color: var(--muted-foreground);
+}
+
+.markdown-view hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 1.25rem 0;
+}
+
+.markdown-view code {
+  background: color-mix(in oklch, var(--muted) 92%, black 8%);
+  border: 1px solid var(--border);
+  border-radius: 0.35rem;
+  padding: 0.08rem 0.35rem;
+  font-size: 0.84em;
+}
+
+.markdown-view pre {
+  background: color-mix(in oklch, var(--muted) 94%, black 6%);
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  padding: 0.85rem 1rem;
+  overflow: auto;
+}
+
+.markdown-view pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.markdown-view table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 0.45rem;
+  border: 1px solid var(--border);
+}
+
+.markdown-view th,
+.markdown-view td {
+  border: 1px solid var(--border);
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.markdown-view thead {
+  background: color-mix(in oklch, var(--muted) 96%, black 4%);
+}

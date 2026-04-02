@@ -1,16 +1,20 @@
-'use client'
+"use client"
 
-const isProd = process.env.NODE_ENV === 'production'
-const BASE_DOMAIN = isProd ? 'flosmeeting.com' : 'flosmeeting.local:3000'
-const PROTOCOL = isProd ? 'https' : 'http'
+const isProd = process.env.NODE_ENV === "production"
+const BASE_DOMAIN = isProd ? "flosmeeting.com" : "flosmeeting.local:3000"
+const PROTOCOL = isProd ? "https" : "http"
 
 export default function HomePage() {
   const goWedding = () => {
-    window.location.href = `${PROTOCOL}://wedding.${BASE_DOMAIN}`
+    window.location.href = PROTOCOL + "://wedding." + BASE_DOMAIN
   }
 
   const goManager = () => {
-    window.location.href = `${PROTOCOL}://manager.${BASE_DOMAIN}`
+    window.location.href = PROTOCOL + "://manager." + BASE_DOMAIN
+  }
+
+  const goDocs = () => {
+    window.location.href = "/docs/housing-market-outlook"
   }
 
   return (
@@ -34,6 +38,13 @@ export default function HomePage() {
           className="rounded-lg border border-border p-4 hover:bg-accent hover:text-accent-foreground transition text-left"
         >
           📊 하객 / 참석 관리 대시보드
+        </button>
+
+        <button
+          onClick={goDocs}
+          className="rounded-lg border border-border p-4 hover:bg-accent hover:text-accent-foreground transition text-left"
+        >
+          📄 부동산 분석 MD 보기
         </button>
       </div>
     </section>
