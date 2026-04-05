@@ -1,21 +1,32 @@
 import { Heart } from "lucide-react"
+import Image, { type ImageLoader } from "next/image"
 import { Card } from "@/components/ui/card"
 import { useFirstScroll } from "@/hooks/use-first-scroll"
 
+const passthroughLoader: ImageLoader = ({ src }) => src
+
 export default function MainSection() {
   const firstScroll = useFirstScroll()
-  const mainImageFile = "romantic-wedding-couple-portrait-in-elegant-settin.jpg";
+  const mainImageFile = "romantic-wedding-couple-portrait-in-elegant-settin.jpg"
+  const mainImageSrc = process.env.NEXT_PUBLIC_CDN
+    ? `https://${process.env.NEXT_PUBLIC_CDN}/${mainImageFile}`
+    : `/${mainImageFile}`
 
   return (
-    <div className={`min-h-screen flex items-center justify-center p-4 ${firstScroll ? 'first-scroll-animate' : ''}`}>
+    <div className={`min-h-screen flex items-center justify-center p-4 ${firstScroll ? "first-scroll-animate" : ""}`}>
       <Card className="max-w-2xl w-full p-8 md:p-12 text-center" data-anim="fade-up">
         {/* Main Image */}
         <div className="mb-8 rounded-lg overflow-hidden" data-anim="fade-in" data-delay="100">
-          <img src={
-            process.env.NEXT_PUBLIC_CDN
-              ? `https://${process.env.NEXT_PUBLIC_CDN}/${mainImageFile}`
-              : `/sample/${mainImageFile}`
-          } alt="Wedding Couple" className="w-full h-auto object-cover" />
+          <Image
+            loader={passthroughLoader}
+            unoptimized
+            src={mainImageSrc}
+            alt="Wedding Couple"
+            width={1200}
+            height={800}
+            className="w-full h-auto object-cover"
+            priority
+          />
         </div>
 
         {/* Invitation Text */}

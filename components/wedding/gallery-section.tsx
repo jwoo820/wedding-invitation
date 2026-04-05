@@ -3,12 +3,15 @@
 import { useEffect, useMemo, useState } from "react"
 import { Card } from "@/components/ui/card"
 import { X } from "lucide-react"
+import Image, { type ImageLoader } from "next/image"
 
 type GalleryImage = {
   id: number
   name: string
   src: string
 }
+
+const passthroughLoader: ImageLoader = ({ src }) => src
 
 export default function GallerySection() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
@@ -61,12 +64,15 @@ export default function GallerySection() {
           {images.map((image, index) => (
             <div
               key={image.id}
-              className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+              className="relative aspect-square rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
               onClick={() => setSelectedImage(index)}
             >
-              <img
+              <Image
+                loader={passthroughLoader}
+                unoptimized
                 src={image.src || "/placeholder.svg"}
                 alt={image.name || `Gallery ${image.id}`}
+                fill
                 className="w-full h-full object-cover"
               />
             </div>
@@ -82,11 +88,16 @@ export default function GallerySection() {
             <button className="absolute top-4 right-4 text-white" onClick={() => setSelectedImage(null)}>
               <X className="h-8 w-8" />
             </button>
-            <img
-              src={images[selectedImage].src || "/placeholder.svg"}
-              alt="Selected"
-              className="max-w-full max-h-full object-contain"
-            />
+            <div className="relative h-[80vh] w-full max-w-5xl">
+              <Image
+                loader={passthroughLoader}
+                unoptimized
+                src={images[selectedImage].src || "/placeholder.svg"}
+                alt="Selected"
+                fill
+                className="object-contain"
+              />
+            </div>
           </div>
         )}
       </Card>
