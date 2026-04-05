@@ -1,19 +1,56 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Card } from "@/components/ui/card"
 import { X } from "lucide-react"
 
+type GalleryImage = {
+  id: number
+  name: string
+  src: string
+}
+
 export default function GallerySection() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
+  const [apiImages, setApiImages] = useState<GalleryImage[]>([])
 
-  const hasCdn = !!process.env.NEXT_PUBLIC_CDN;
-  const images = Array.from({ length: 6 }, (_, i) => ({
-    id: i + 1,
-    src: hasCdn
-      ? `https://${process.env.NEXT_PUBLIC_CDN}/gallery/gallery-${i + 1}.jpg`
-      : `/sample/gallery-${i + 1}.jpg`, // fallback sample image in /public/sample/
-  }))
+  const hasCdn = !!process.env.NEXT_PUBLIC_CDN
+  const fallbackImages = useMemo(
+    () =>
+      Array.from({ length: 6 }, (_, i) => ({
+        id: i + 1,
+        name: `gallery-${i + 1}.jpg`,
+        src: hasCdn
+          ? `https://${process.env.NEXT_PUBLIC_CDN}/gallery/gallery-${i + 1}.jpg`
+          : `/gallery-${i + 1}.jpg`,
+      })),
+    [hasCdn]
+  )
+
+  useEffect(() => {
+    if (hasCdn) return
+
+    let isMounted = true
+    const load = async () => {
+      try {
+        const response = await fetch("/api/images", { cache: "no-store" })
+        if (!response.ok) return
+        const data = (await response.json()) as { images?: GalleryImage[] }
+        if (isMounted && Array.isArray(data.images) && data.images.length > 0) {
+          setApiImages(data.images)
+        }
+      } catch {
+        // Fallback images are used if API fails.
+      }
+    }
+
+    load()
+    return () => {
+      isMounted = false
+    }
+  }, [hasCdn])
+
+  const images = hasCdn ? fallbackImages : apiImages.length > 0 ? apiImages : fallbackImages
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 py-20">
@@ -29,7 +66,7 @@ export default function GallerySection() {
             >
               <img
                 src={image.src || "/placeholder.svg"}
-                alt={`Gallery ${image.id}`}
+                alt={image.name || `Gallery ${image.id}`}
                 className="w-full h-full object-cover"
               />
             </div>
