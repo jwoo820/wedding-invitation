@@ -6,9 +6,10 @@
     "build": "next build",
     "dev": "next dev -H 0.0.0.0 -p 3000",
     "lint": "ESLINT_USE_FLAT_CONFIG=false next lint",
+    "typecheck": "tsc --noEmit",
     "start": "next start",
     "hooks:install": "git config core.hooksPath .githooks",
-    "test:harness": "npm run lint && npm run build",
+    "test:harness": "npm run lint && npm run typecheck && npm run build",
     "dev:wedding": "NEXT_DEV_ORIGIN=http://wedding.flosmeeting.local:3000 next dev -H 0.0.0.0 -p 3000",
     "dev:manager": "NEXT_DEV_ORIGIN=http://manager.flosmeeting.local:3000 next dev -H 0.0.0.0 -p 3000",
     "dev:www": "NEXT_DEV_ORIGIN=http://www.flosmeeting.local:3000 next dev -H 0.0.0.0 -p 3000"

@@ -8,14 +8,6 @@ const nextConfig = {
     "http://www.flosmeeting.local:3000",
   ],
 
-  // Keep current build policy to avoid blocking existing CI pipeline.
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-
   // Disable image optimization for current deployment strategy.
   images: {
     unoptimized: true,
