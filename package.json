@@ -5,9 +5,10 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev -H 0.0.0.0 -p 3000",
-    "lint": "next lint",
+    "lint": "ESLINT_USE_FLAT_CONFIG=false next lint",
     "start": "next start",
     "hooks:install": "git config core.hooksPath .githooks",
+    "test:harness": "npm run lint && npm run build",
     "dev:wedding": "NEXT_DEV_ORIGIN=http://wedding.flosmeeting.local:3000 next dev -H 0.0.0.0 -p 3000",
     "dev:manager": "NEXT_DEV_ORIGIN=http://manager.flosmeeting.local:3000 next dev -H 0.0.0.0 -p 3000",
     "dev:www": "NEXT_DEV_ORIGIN=http://www.flosmeeting.local:3000 next dev -H 0.0.0.0 -p 3000"
@@ -75,6 +76,8 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "cross-env": "^10.1.0",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.33",
     "postcss": "^8.5",
     "tailwindcss": "^4.1.9",
     "tw-animate-css": "1.3.3",
